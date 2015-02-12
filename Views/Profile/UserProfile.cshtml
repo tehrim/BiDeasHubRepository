@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "UserProfile";
+}
+<style type="text/css">
+    #topHeading {
+        color: white;
+        position: center;
+    }
+
+    #websiteName {
+        font-size: 20px;
+        font-family: 'Bookman Old Style';
+        font-stretch: normal;
+    }
+
+    #addIdeaDiv {
+        background-color: lightgrey;
+        width: 1300px;
+        padding: 25px;
+        border: 25px solid double black;
+        margin: 25px;
+    }
+</style>
+
+<head>
+
+    <title></title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</head>
+
+<script>
+    function showDiv() {
+        document.getElementById('addIdeaDiv').style.display = "block";
+    }
+    function updateIdea() {
+        document.getElementById('updateIdeaDiv').style.display = "block";
+    }
+
+</script>
+<body>
+
+    <div class="container">
+        <div class="jumbotron" id="websiteName">
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="~/img/idea.gif" class="img-rounded" alt="Cinque Terre" width="200" height="150">
+                </div>
+                <div class="col-xs-6">
+                    <h3>BiDeas Feed</h3>
+                    <p>Here's your ideas feed...</p>
+                    <button type="button" onclick="showDiv()">
+                        <span class="glyphicon glyphicon-plus-sign"></span>Add a new idea to your feed!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--add new ideas-->
+    <div class="container" id="addIdeaDiv" style="display:none;">
+        <div class="row">
+            <div class="box" id="addIdeaBox">
+                <div class="col-lg-12">
+                    <hr>
+                    <h2 class="intro-text text-center">
+                        Add your
+                        <strong>iDea</strong>
+                    </h2>
+                    <hr>
+                    <form role="form" method="post" action="/Profile/Submit/" enctype="multipart/form-data">
+                        <div class="row">
+
+                            <div class="form-group col-lg-4">
+                                <label>Idea Title:</label>
+                                <input type="text" class="form-control" name="ideaTitle">
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div class="form-group col-lg-12">
+                                <label>Add your idea here:</label>
+                                <textarea class="form-control" rows="6" name="idea"></textarea>
+                                <input type="file" name="ideaFile"/>
+
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <input type="hidden" name="save" value="contact">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            @if (ViewBag.ideas != null)
+            {
+                <!--boxes to display list of ideas-->
+                foreach (var item in ViewBag.ideas)
+                {
+
+                    <div class="box">
+                        <div class="col-lg-12 text-center">
+
+
+                            <h3>
+                                @item.ideaTitle
+                                <br>
+                                <small>@item.date</small>
+                            </h3>
+
+                            <p>@item.idea</p>
+
+
+                            <form role="form" action="/Profile/del/@item.Id/" method="post">
+                                <button type="submit" name="command" value="delete">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> Delete
+                                </button>
+                            </form>
+
+                            <button type="button" name="command" value="update" onclick="updateIdea()">
+                                <span class="glyphicon glyphicon-edit"></span>Update
+                            </button>
+                            <hr>
+                        </div>
+                    </div>
+                
+                    <!--update idea div-->
+                    <div class="container" id="updateIdeaDiv" style="display:none;">
+                        <div class="row">
+                            <div class="box" id="updateIdeaBox">
+                                <div class="col-lg-12">
+                                    <hr>
+                                    <h2 class="intro-text text-center">
+                                        Update your
+                                        <strong>iDea</strong>
+                                    </h2>
+                                    <hr>
+                                    <form role="form" method="post" action="/Profile/update/@item.Id">
+                                        <div class="row">
+
+                                            <div class="form-group col-lg-4">
+                                                <label>Idea Title:</label>
+                                                <input id="title" type="text" class="form-control" name="ideaTitle" placeholder="@item.ideaTitle">
+                                            </div>
+
+                                            <div class="clearfix"></div>
+                                            <div class="form-group col-lg-12">
+                                                <label>Update your idea here:</label>
+                                                <textarea id="idea" class="form-control" rows="6" name="idea" placeholder="@item.idea"></textarea>
+                                            </div>
+                                            <div class="form-group col-lg-12">
+                                                <input type="hidden" name="save" value="contact">
+                                                <button type="submit" class="btn btn-default">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else if (ViewBag.ideas == null)
+            {
+                <div class="container">
+                    <div class="box">
+                        <!--idea display model-->
+                        <div class="col-lg-12 text-center">
+                            <img class="img-responsive img-border img-full" src="~/img/slide-1.jpg" alt="">
+                            <h2>
+                                Bidea title
+                                <br>
+                                <small>Your idea display area...</small>
+                            </h2>
+                            <p>ADD YOUR IDEAS TO FILL YOUR FEED. TRUST YOUR CRAZY IDEAS AND START SHARING! </p>
+                            <a href="#" class="btn btn-default btn-lg">Read More</a>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <!-- /.container -->
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>

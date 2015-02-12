@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "BiDeasFeed";
+}
+
+<head>
+
+    <title></title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="box">
+
+                <!--main Bideas heading-->
+                <div class="col-lg-12">
+                    <hr>
+                    <h2 class="intro-text text-center">
+                        BiDeas
+                        <strong>Feed</strong>
+                    </h2>
+                    <hr>
+                </div>
+                @if(ViewBag.ideas!=null)
+                {
+                    foreach(var item in ViewBag.ideas)
+                    {
+                        <!--idea display 1-->
+                        <div class="col-lg-12 text-center">
+                            <img class="img-responsive img-border img-full" src="~/img/slide-1.jpg" alt="">
+                            <h2>
+                                @item.ideaTitle
+                                <br>
+                                <small>@item.date</small>
+                            </h2>
+                            <p>@item.idea</p>
+                            <form class="form-horizontal" action="/Home/fav/@item.Id/" method="post">
+                                <button type="submit" name="command" value="favourite">
+                                    <span class="glyphicon glyphicon-star"></span> Favourite
+                                </button>
+                            </form>
+                            <hr>
+                        </div>
+                    }
+                }
+                else
+                {
+                                <!--idea display 1-->
+                                <div class="col-lg-12 text-center">
+                                    <img class="img-responsive img-border img-full" src="~/img/slide-1.jpg" alt="">
+                                    <h2>
+                                        Bidea title
+                                        <br>
+                                        <small>Date</small>
+                                    </h2>
+                                    <p>Your idea display area</p>
+                                    <a href="#" class="btn btn-default btn-lg">Read More</a>
+                                    <hr>
+                                </div>
+
+                             <!--idea display 2-->
+                              <div class="col-lg-12 text-center">
+                             <img class="img-responsive img-border img-full" src="~/img/slide-2.jpg" alt="">
+                             <h2>
+                                 BiDea Title
+                                 <br>
+                                 <small>Date</small>
+                             </h2>
+                             <p>Your idea display area.</p>
+                             <a href="#" class="btn btn-default btn-lg">Read More</a>
+                             <hr>
+                         </div>
+
+
+                         <div class="col-lg-12 text-center">
+                             <img class="img-responsive img-border img-full" src="~/img/slide-3.jpg" alt="">
+                             <h2>
+                                 BiDea Title
+                                 <br>
+                                 <small>Date</small>
+                             </h2>
+                             <p>Your idea display area.</p>
+                             <a href="#" class="btn btn-default btn-lg">Read More</a>
+                             <hr>
+                         </div>
+
+
+                         <div class="col-lg-12 text-center">
+                             <ul class="pager">
+                                 <li class="previous">
+                                     <a href="#">&larr; Older</a>
+                                 </li>
+                                 <li class="next">
+                                     <a href="#">Newer &rarr;</a>
+                                 </li>
+                             </ul>
+                         </div>
+
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- /.container -->
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
